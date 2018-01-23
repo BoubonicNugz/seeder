@@ -31,7 +31,7 @@ public:
   CDnsSeedOpts() : nThreads(96), nDnsThreads(4), nPort(53), mbox(NULL), ns(NULL), host(NULL), tor(NULL), fUseTestNet(false), fWipeBan(false), fWipeIgnore(false) {}
 
   void ParseCommandLine(int argc, char **argv) {
-    static const char *help = "Viacoin-seeder\n"
+    static const char *help = "canadaecoin-seeder\n"
                               "Usage: %s -h <host> -n <ns> [-m <mbox>] [-t <threads>] [-p <port>]\n"
                               "\n"
                               "Options:\n"
@@ -72,17 +72,17 @@ public:
           host = optarg;
           break;
         }
-        
+
         case 'm': {
           mbox = optarg;
           break;
         }
-        
+
         case 'n': {
           ns = optarg;
           break;
         }
-        
+
         case 't': {
           int n = strtol(optarg, NULL, 10);
           if (n > 0 && n < 1000) nThreads = n;
@@ -100,7 +100,7 @@ public:
           if (p > 0 && p < 65536) nPort = p;
           break;
         }
-        
+
         case 'o': {
           tor = optarg;
           break;
@@ -238,7 +238,7 @@ extern "C" int GetIPList(void *data, addr_t* addr, int max, int ipv4, int ipv6) 
   while (i<max) {
     int j = i + (rand() % (size - i));
     do {
-        bool ok = (ipv4 && thread->cache[j].v == 4) || 
+        bool ok = (ipv4 && thread->cache[j].v == 4) ||
                   (ipv6 && thread->cache[j].v == 6);
         if (ok) break;
         j++;
@@ -337,13 +337,13 @@ extern "C" void* ThreadStats(void*) {
   } while(1);
 }
 
-static const string mainnet_seeds[] = {"mainnet.viacoin.net", "seed.viacoin.net", ""};
-static const string testnet_seeds[] = {"testnet.viacoin.net", "seed-testnet.viacoin.net", ""};
+static const string mainnet_seeds[] = {"1.seeder.canadaecoin.net", "2.seeder.canadaecoin.net", ""};
+static const string testnet_seeds[] = {"1.seeder-testnet.canadaecoin.net", "2.seeder-testnet.canadaecoin.net", ""};
 static const string *seeds = mainnet_seeds;
 
 extern "C" void* ThreadSeeder(void*) {
   if (!fTestNet){
-    db.Add(CService("kjy2eqzk4zwi5zd3.onion", 5223), true);
+    // db.Add(CService("kjy2eqzk4zwi5zd3.onion", 5223), true);
   }
   do {
     for (int i=0; seeds[i] != ""; i++) {
